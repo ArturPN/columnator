@@ -1,37 +1,13 @@
 <?php
 
 namespace App\Model;
+
 use Nette;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Finder;
 use Nette\Utils\Image;
 
 class DatabaseModel {
-
-    private $database;
-
-    public function __construct(Nette\Database\Context $database){
-        $this->database = $database;
-    }
-
-    public function identityStatus($pres){
-        if($pres->getUser()->isLoggedIn() == 1){
-            $identityStatus = $pres->getUser()->getIdentity()->username;
-        } else {
-            $identityStatus = FALSE;
-        }
-        return $identityStatus;
-    }
-
-    public function getGalleries(){
-        $galleries = $this->database->table('galleries');
-        return $galleries;
-    }
-
-    public function getGallery($gallery){
-        $galleries = $this->database->table('galleries')->where('ID = '.$gallery.'')->fetch();
-        return $galleries;
-    }
     
     public function columnate($gallery){
         /*
@@ -50,12 +26,12 @@ class DatabaseModel {
         $column = 1;
         $nmbr = 1;
         $photo = 0;
-        $dir = __DIR__.'\..\..\www\gallery-imgs\cat'.$gallery.'\mini\\';
-        $path = '/gallery-imgs/cat'.$gallery.'/mini/';
+        $dir = __DIR__.'\..\..\www\pathToGallery\galleryNumber'.$gallery.'\\';
+        $path = '/pathToGallery/galleryNumber'.$gallery.'/';
 
         // find photos in catalogue $dir and assign them to columns $col
         foreach(Finder::findFiles('*.jpg')->in($dir) as $file){
-            $img = Image::fromFile($dir.$nmbr.'-mini.jpg');
+            $img = Image::fromFile($dir.$nmbr.'-mini.jpg'); // 'mini' referrs to photo size
             $or = $img->getWidth()/$img->getHeight();
 
             // for photos rotated only by EXIF data (for example, mobile phones or without developing)
@@ -71,7 +47,7 @@ class DatabaseModel {
                 }
             }
 
-            // determine if selected column has the lowest number - if not, find the column with lowest free row
+            // determine if selected column has the lowest row number - if not, find the column with lowest free row number
             $lowestRow = min($rowInColumn);
             if($lowestRow < $rowInColumn[$column]){
                 $column = min(array_keys($rowInColumn, min($rowInColumn)));
@@ -104,8 +80,8 @@ class DatabaseModel {
 
         $files = array();
         $nmbr = 1;
-        $dir = __DIR__.'\..\..\www\gallery-imgs\cat'.$gallery.'\mini\\';
-        $path = '/gallery-imgs/cat'.$gallery.'/mini/';
+        $dir = __DIR__.'\..\..\www\pathToGallery\galleryNumber'.$gallery.'\\';
+        $path = '/pathToGallery/galleryNumber'.$gallery.'/';
 
         foreach(Finder::findFiles('*.jpg')->in($dir) as $file){
             $files[] = $path.$nmbr.'-mini.jpg';
