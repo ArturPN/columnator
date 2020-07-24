@@ -9,3 +9,6 @@ Simple script that divides photos from a directory into 4 columns, sorted from l
 4. Make sure to check every $dir and $path variable and adapt it into your project. Don't forget to add a CSS.
 
 You don't have to copy all the files - the most important are: functions columnate() and listPhotos() from DatabaseModel.php and for/foreach loop(s) in gallery.latte.
+
+## Performance
+Instead of running this script every time users open a webpage, I recommend saving the results into a database or a file due to performance issues - we don't want this script to iterate through photos every time. Do it once - during uploading photos.
