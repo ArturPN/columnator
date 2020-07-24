@@ -1,0 +1,15 @@
+{$displayMenu=TRUE}
+{block content}
+
+Galeria numer: {$gallery}<br />
+<div id="gallery">
+    {for $i=1; $i<=4; $i++}
+    <div class="gallery_column">
+        {foreach $col[$i] as $p}
+            <img src="{$basePath}{$files[$p]}" />
+        {/foreach}
+    </div>
+    {/for}
+</div>
+
+{/block}
